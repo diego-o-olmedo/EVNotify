@@ -36,7 +36,7 @@ workflows:
           cordova build android --release --no-interactive --prod --device
           echo $CM_KEYSTORE | base64 --decode > $KEYSTORE_PATH
           UNSIGNED_APK_PATH=$(find platforms/android/app/build/outputs -name "*.apk" | head -1)
-          jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore "${KEYSTORE_PATH}" -storepass "${CM_KEYSTORE_PASSWORD}" -keypass "${CM_KEY_ALIAS_PASSWORD}" "${UNSIGNED_APK_PATH}" "${CM_KEY_ALIAS}"
+          jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore "${KEYSTORE_PATH}" -storepass "${CM_KEYSTORE_PASSWORD}" -keypass "${CM_KEY_PASSWORD}" "${UNSIGNED_APK_PATH}" "${CM_KEY_ALIAS}"
           mv $UNSIGNED_APK_PATH $(echo $UNSIGNED_APK_PATH | sed 's/-unsigned//')          
     artifacts:
       - platforms/android/app/build/outputs/**/*.apk
