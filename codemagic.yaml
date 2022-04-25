@@ -25,13 +25,14 @@ workflows:
       - name: Add Android platform
         script: |
           set -x
+          set -e
+          echo $ANDROID_FIREBASE_SECRET > $CM_BUILD_DIR/google-services.json
           cordova platform remove android --nosave
           cordova platform add android --confirm --no-interactive --noresources          
       - name: Build Android
         script: |
           set -x
           set -e
-          echo $ANDROID_FIREBASE_SECRET > $CM_BUILD_DIR/google-services.json
           cordova build android --release --no-interactive --prod --device
           echo $KEYSTORE | base64 --decode > $KEYSTORE_PATH
           UNSIGNED_APK_PATH=$(find platforms/android/app/build/outputs -name "*.apk" | head -1)
