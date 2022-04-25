@@ -39,5 +39,3 @@ workflows:
     artifacts:
       - platforms/android/app/build/outputs/**/*.apk
       - platforms/android/app/build/outputs/**/mapping.txt
-    publishing:
-      # See the following link for details about email publishing - https://docs.codemagic.io/yaml-publishing/email
