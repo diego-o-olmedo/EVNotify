@@ -41,21 +41,3 @@ workflows:
       - platforms/android/app/build/outputs/**/mapping.txt
     publishing:
       # See the following link for details about email publishing - https://docs.codemagic.io/yaml-publishing/email
-      email:
-        recipients:
-          - user_1@example.com
-          - user_2@example.com
-        notify:
-          success: true     # To receive a notification when a build succeeds
-          failure: false    # To not receive a notification when a build fails
-      slack:
-        # See the following link about how to connect your Slack account - https://docs.codemagic.io/yaml-publishing/slack
-        channel: '#channel-name'
-        notify_on_build_start: true   # To receive a notification when a build starts
-        notify:
-          success: true               # To receive a notification when a build succeeds
-          failure: false              # To not receive a notification when a build fails
-      google_play:
-        # See the following link for information regarding publishing to Google Play - https://docs.codemagic.io/yaml-publishing/google-play
-        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-        track: alpha # <-- Any default or custom track that is not in ‘draft’ status
