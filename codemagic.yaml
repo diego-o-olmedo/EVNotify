@@ -8,6 +8,9 @@ workflows:
         - other
       # Add the group environment variables in Codemagic UI (either in Application/Team variables) - https://docs.codemagic.io/variables/environment-variable-groups/
       vars:
+        GRADLE_PATH: /Users/builder/programs/gradle-5.6.4/bin
+        ANDROID_SDK_ROOT: /Users/builder/programs/android-sdk-macosx
+        RELEASE_DIR: /Users/builder/clone/platforms/android/app/build/outputs/apk/release
         KEYSTORE_PATH: '/tmp/keystore.keystore'
       xcode: 12.4
       node: 12
@@ -33,7 +36,10 @@ workflows:
         script: |
           set -x
           set -e
-          cordova build android --release --no-interactive --prod --device
+          echo $GRADLE_PATH
+          export PATH=$GRADLE_PATH:$PATH
+          echo $PATH
+          export PATH=$GRADLE_PATH:$PATH && cordova build android --release --no-interactive --prod --device
           echo $CM_KEYSTORE | base64 --decode > $KEYSTORE_PATH
           UNSIGNED_APK_PATH=$(find platforms/android/app/build/outputs -name "*.apk" | head -1)
           jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore "${KEYSTORE_PATH}" -storepass "${CM_KEYSTORE_PASSWORD}" -keypass "${CM_KEY_PASSWORD}" "${UNSIGNED_APK_PATH}" "${CM_KEY_ALIAS}"
